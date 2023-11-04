@@ -15,4 +15,4 @@ Works with a cached thread pool that has each client with its own thread.
 
 
 
-## Supported by _Varbies_@code4all
+## Supported by varbies_@codeForAll_
