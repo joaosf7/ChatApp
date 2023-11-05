@@ -91,40 +91,19 @@ class ServerWorker implements Runnable {
                         argument = line.split(" ")[1];
                     switch (command) {
                         case "/help":
-                            ChatServer.sendMessageToWorker(this, "List of command to use in the Varbies Mega Chat:");
-                            ChatServer.sendMessageToWorker(this, "/help - lists all the commands");
-                            ChatServer.sendMessageToWorker(this, "/nick - change your nickname");
-                            ChatServer.sendMessageToWorker(this, "/list - lists all the users currently in this chat");
+                            showHelp();
                             break;
                         case "/nick":
-                            if (argument == null)
-                                ChatServer.sendMessageToWorker(this, "Your nickname is: " + name);
-                            else {
-                                int i;
-                                for (i = 0; i < ChatServer.serverWorkers.size(); i++)
-                                    if (ChatServer.serverWorkers.get(i).getName().equals(argument)) {
-                                        ChatServer.sendMessageToWorker(this, "Nickname already in use!");
-                                        break;
-                                    }
-                                if(i == ChatServer.serverWorkers.size()) {
-                                    ChatServer.broadcast(name + " sets nickname to " + argument);
-                                    name = argument;
-                                }
-                            }
+                            changeNick(argument);
                             break;
                         case "/list":
-                            ChatServer.sendMessageToWorker(this, "List of all the users currently in this chat:");
-                            for (ServerWorker worker : ChatServer.serverWorkers)
-                                ChatServer.sendMessageToWorker(this, worker.name);
+                            list();
                             break;
                         case "/whisper":
-                            if (line.split(" ").length < 3) {
-                                ChatServer.sendMessageToWorker(this, "Can't whisper without user and a message :)");
-                                break;
-                            }
-                            for (ServerWorker worker : ChatServer.serverWorkers)
-                                if (worker.getName().equals(argument) && !(worker.getName().equals(this.getName())))
-                                    ChatServer.sendMessageToWorker(worker, this.getName() + " whispers: " + line.split(" ", 3)[2]);
+                            whisper(line);
+                            break;
+                        case "/send":
+                            sendFile(line);
                             break;
                         default:
                             ChatServer.broadcast("Unknown command. Type /help for a list of known commands.");
@@ -141,6 +120,58 @@ class ServerWorker implements Runnable {
             System.err.println(e);
         }
 
+    }
+
+    private void sendFile(String line) {
+        if (line.split(" ").length < 3) {
+            ChatServer.sendMessageToWorker(this, "Can't send a file without a user and a file :)");
+            return;
+        }
+        for (ServerWorker worker : ChatServer.serverWorkers)
+            if (worker.getName().equals(line.split(" ")[1]) && !(worker.getName().equals(this.getName())))
+                ChatServer.sendMessageToWorker(worker, this.getName() + " whispers: " + line.split(" ", 3)[2]);
+    }
+
+    private void showHelp() {
+        ChatServer.sendMessageToWorker(this, "List of command to use in the Varbies Mega Chat:");
+        ChatServer.sendMessageToWorker(this, "/help - lists all the commands");
+        ChatServer.sendMessageToWorker(this, "/nick - change your nickname");
+        ChatServer.sendMessageToWorker(this, "/list - lists all the users currently in this chat");
+        ChatServer.sendMessageToWorker(this, "/whisper nick message - whisper a message to a friend");
+        ChatServer.sendMessageToWorker(this, "/send nick file - sends a file to selected user");
+    }
+
+    private void changeNick(String argument) {
+        if (argument == null)
+            ChatServer.sendMessageToWorker(this, "Your nickname is: " + name);
+        else {
+            int i;
+            for (i = 0; i < ChatServer.serverWorkers.size(); i++)
+                if (ChatServer.serverWorkers.get(i).getName().equals(argument)) {
+                    ChatServer.sendMessageToWorker(this, "Nickname already in use!");
+                    break;
+                }
+            if (i == ChatServer.serverWorkers.size()) {
+                ChatServer.broadcast(name + " sets nickname to " + argument);
+                name = argument;
+            }
+        }
+    }
+
+    private void list() {
+        ChatServer.sendMessageToWorker(this, "List of all the users currently in this chat:");
+        for (ServerWorker worker : ChatServer.serverWorkers)
+            ChatServer.sendMessageToWorker(this, worker.name);
+    }
+
+    private void whisper(String line) {
+        if (line.split(" ").length < 3) {
+            ChatServer.sendMessageToWorker(this, "Can't whisper without user and a message :)");
+            return;
+        }
+        for (ServerWorker worker : ChatServer.serverWorkers)
+            if (worker.getName().equals(line.split(" ")[1]) && !(worker.getName().equals(this.getName())))
+                ChatServer.sendMessageToWorker(worker, this.getName() + " whispers: " + line.split(" ", 3)[2]);
     }
 
     public Socket getSocket() {
