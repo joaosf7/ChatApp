@@ -1,6 +1,12 @@
 # TCP Chat server and client made in Java
 Welcome to ChatApp, a TCP-based chat application developed in Java. This project is designed with multi-client support, featuring a robust cached thread pool that assigns a dedicated thread to each connected client.
 
+![ChatServer image](screenshots/server.png)
+
+![ChatClient1 image](screenshots/client1.png)
+
+![ChatClient2 image](screenshots/client2.png)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
