@@ -26,7 +26,7 @@ This project was developed using Java and features a cached thread pool to effic
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/ChatApp.git
+    git clone https://github.com/joaosf7/ChatApp.git
     cd ChatApp
     ```
 
