@@ -64,12 +64,13 @@ Supported commands:
 
 /help - lists the commands available for the client
 
-/quit - quits the client app
+/list - lists all the users currently in the chat
 
 /nick yourNickname - sets default name to a nickname chosen by the user
 
 /whisper user message - whispers a message to a specific user
 
+/quit - quits the client app
 
 ## Contributing
 
@@ -80,4 +81,4 @@ If you'd like to contribute to this project, please do!
 This project is licensed under the [MIT License](LICENSE).
 
 
-#### Supported by varbies_@codeForAll_
+#### Supported by VARbies_@codeForAll_
