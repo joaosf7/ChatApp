@@ -14,7 +14,6 @@ Welcome to ChatApp, a TCP-based chat application developed in Java. This project
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
@@ -75,10 +74,3 @@ Supported commands:
 ## Contributing
 
 If you'd like to contribute to this project, please do!
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-
-#### Supported by VARbies_@codeForAll_
